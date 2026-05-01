@@ -106,3 +106,45 @@ minBtn.MouseButton1Click:Connect(function()
         isMinimized = false
     end
 end)
+
+-- === LOGIKA GESER MENU (DRAGGABLE) ===
+local UserInputService = game:GetService("UserInputService")
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    -- Mengubah posisi menuFrame berdasarkan gerakan jari
+    -- Angka -200 dan -200 di bawah adalah posisi awal tengahmu tadi
+    menuFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+-- Saat jari mulai menyentuh Top Bar (Bagian abu-abu)
+topBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = menuFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+topBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end)
