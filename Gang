@@ -45,6 +45,29 @@ minBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Tombol Hitam
 minBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 minBtn.Parent = topBar
 
+-- Wadah untuk Chatlogs (Satu level dengan buttonContainer)
+local chatlogFrame = Instance.new("ScrollingFrame")
+chatlogFrame.Size = UDim2.new(1, 0, 1, -30)
+chatlogFrame.Position = UDim2.new(0, 0, 0, 30)
+chatlogFrame.BackgroundTransparency = 1
+chatlogFrame.Visible = false -- Sembunyi dulu
+chatlogFrame.ScrollBarThickness = 5
+chatlogFrame.Parent = menuFrame
+
+local logLayout = Instance.new("UIListLayout")
+logLayout.Padding = UDim.new(0, 5)
+logLayout.Parent = chatlogFrame
+
+-- Tombol Kembali (Back) di Top Bar
+local backBtn = Instance.new("TextButton")
+backBtn.Size = UDim2.new(0, 80, 0, 25)
+backBtn.Position = UDim2.new(0, 5, 0, 2)
+backBtn.Text = "< Back"
+backBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+backBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+backBtn.Visible = false
+backBtn.Parent = topBar
+
 -- DAFTAR TOMBOL MERAH (TCO, Settings, dll)
 local buttonContainer = Instance.new("Frame")
 buttonContainer.Size = UDim2.new(1, 0, 1, -30)
@@ -147,4 +170,41 @@ UserInputService.InputChanged:Connect(function(input)
     if input == dragInput and dragging then
         update(input)
     end
+end)
+
+-- Fungsi Menambah Teks Chat
+local function addLog(sender, message)
+    local logText = Instance.new("TextLabel")
+    logText.Size = UDim2.new(1, -10, 0, 25)
+    logText.Text = "[" .. sender .. "]: " .. message
+    logText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    logText.BackgroundTransparency = 0.8
+    logText.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    logText.TextXAlignment = Enum.TextXAlignment.Left
+    logText.Parent = chatlogFrame
+    chatlogFrame.CanvasSize = UDim2.new(0, 0, 0, logLayout.AbsoluteContentSize.Y)
+end
+
+-- Deteksi Chat Pemain
+for _, player in pairs(game.Players:GetPlayers()) do
+    player.Chatted:Connect(function(msg) addLog(player.Name, msg) end)
+end
+game.Players.PlayerAdded:Connect(function(player)
+    player.Chatted:Connect(function(msg) addLog(player.Name, msg) end)
+end)
+
+-- Fungsi Klik Tombol TCO untuk buka Chatlogs
+tcoBtn.MouseButton1Click:Connect(function()
+    buttonContainer.Visible = false
+    chatlogFrame.Visible = true
+    backBtn.Visible = true
+    titleLabel.Text = "Chatlogs"
+end)
+
+-- Fungsi Klik Tombol Back untuk balik ke menu utama
+backBtn.MouseButton1Click:Connect(function()
+    chatlogFrame.Visible = false
+    backBtn.Visible = false
+    buttonContainer.Visible = true
+    titleLabel.Text = "Main Menu"
 end)
