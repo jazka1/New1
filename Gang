@@ -25,7 +25,7 @@ introText.Parent = introFrame
 
 -- === [4. TAHAP MENU UTAMA (SETELAH INTRO)] ===
 local menuFrame = Instance.new("Frame")
-menuFrame.Size = UDim2.new(0.28, 300, 2, 400)
+menuFrame.Size = UDim2.new(0.28, 300, 0.4, 400)
 menuFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
 menuFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 menuFrame.Visible = false -- Sembunyi dulu pas intro
