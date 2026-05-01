@@ -45,6 +45,30 @@ minBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Tombol Hitam
 minBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 minBtn.Parent = topBar
 
+-- Wadah Utama Chatlogs
+local chatlogFrame = Instance.new("ScrollingFrame")
+chatlogFrame.Size = UDim2.new(1, 0, 1, -30)
+chatlogFrame.Position = UDim2.new(0, 0, 0, 30)
+chatlogFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+chatlogFrame.BackgroundTransparency = 0.2 -- Biar agak transparan dikit
+chatlogFrame.Visible = false 
+chatlogFrame.ScrollBarThickness = 6
+chatlogFrame.Parent = menuFrame
+
+local logLayout = Instance.new("UIListLayout")
+logLayout.Padding = UDim.new(0, 2)
+logLayout.Parent = chatlogFrame
+
+-- Tombol Kembali
+local backBtn = Instance.new("TextButton")
+backBtn.Size = UDim2.new(0, 70, 0, 25)
+backBtn.Position = UDim2.new(0, 5, 0, 2)
+backBtn.Text = "< Back"
+backBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+backBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+backBtn.Visible = false
+backBtn.Parent = topBar
+
 -- Wadah untuk Chatlogs (Satu level dengan buttonContainer)
 local chatlogFrame = Instance.new("ScrollingFrame")
 chatlogFrame.Size = UDim2.new(1, 0, 1, -30)
