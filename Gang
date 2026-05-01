@@ -87,16 +87,19 @@ RunService.RenderStepped:Connect(function()
     menuFrame.BorderColor3 = Color3.fromHSV(t * 0.5 % 1, 1, 1)
 end)
 
--- Logika Minimize
+-- Logika Minimize (Pastikan angkanya 400 agar tetap lebar)
 local isMinimized = false
 minBtn.MouseButton1Click:Connect(function()
     if not isMinimized then
+        -- SAAT MENYEMBUNYIKAN MENU
         buttonContainer.Visible = false
-        menuFrame:TweenSize(UDim2.new(0, 300, 0, 30), "Out", "Quart", 0.3)
+        -- Lebar tetap 400, tinggi jadi 30
+        menuFrame:TweenSize(UDim2.new(0, 400, 0, 30), "Out", "Quart", 0.3)
         minBtn.Text = "+"
         isMinimized = true
     else
-        menuFrame:TweenSize(UDim2.new(0, 300, 0, 400), "Out", "Quart", 0.3)
+        -- SAAT MENGEMBALIKAN MENU (Ganti ke 400 agar tidak kembali kecil)
+        menuFrame:TweenSize(UDim2.new(0.28, 400, 2, 400), "Out", "Quart", 0.3)
         task.wait(0.3)
         buttonContainer.Visible = true
         minBtn.Text = "-"
