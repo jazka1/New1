@@ -26,7 +26,7 @@ introText.Parent = introFrame
 
 -- 4. BAGIAN MENU (Disembunyikan dulu)
 local menuFrame = Instance.new("Frame")
-menuFrame.Size = UDim2.new(400, 300, 400, 200)
+menuFrame.Size = UDim2.new(100, 300, 200, 200)
 menuFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
 menuFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 menuFrame.Visible = false -- INI KUNCINYA: Menu tidak terlihat dulu
