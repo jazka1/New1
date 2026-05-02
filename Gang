@@ -196,6 +196,46 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
+local LogService = game:GetService("LogService")
+
+-- Fungsi buat nambahin teks ke menu
+local function addLog(name, msg)
+    local logText = Instance.new("TextLabel")
+    logText.Size = UDim2.new(1, -10, 0, 20)
+    logText.Text = " [" .. name .. "]: " .. msg
+    logText.TextColor3 = Color3.fromRGB(0, 255, 100) -- Warna ijo biar keren
+    logText.BackgroundTransparency = 1
+    logText.TextXAlignment = Enum.TextXAlignment.Left
+    logText.TextScaled = true
+    logText.Parent = chatlogFrame
+    
+    -- Auto Scroll
+    chatlogFrame.CanvasSize = UDim2.new(0, 0, 0, logLayout.AbsoluteContentSize.Y)
+    chatlogFrame.CanvasPosition = Vector2.new(0, logLayout.AbsoluteContentSize.Y)
+end
+
+-- CARA AMPUH: Menangkap semua chat termasuk yang pakai tanda ;
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
+    local speaker = data.FromSpeaker
+    local message = data.Message
+    addLog(speaker, message)
+end)
+
+-- Fungsi Pindah Halaman
+tcoBtn.MouseButton1Click:Connect(function()
+    buttonContainer.Visible = false
+    chatlogFrame.Visible = true
+    backBtn.Visible = true
+    titleLabel.Text = "LOGS (TCO)"
+end)
+
+backBtn.MouseButton1Click:Connect(function()
+    chatlogFrame.Visible = false
+    backBtn.Visible = false
+    buttonContainer.Visible = true
+    titleLabel.Text = "Main Menu"
+end)
+
 -- Fungsi Menambah Teks Chat
 local function addLog(sender, message)
     local logText = Instance.new("TextLabel")
